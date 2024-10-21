@@ -5,6 +5,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Iniciar } from "./pages/iniciar";
 import { Private } from "./pages/private";
+import { Registro } from "./pages/registro";
 import injectContext from "./store/appContext";
 
 
@@ -21,6 +22,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                     <Routes>
                         <Route element={<Home />} path="/" />
+                        <Route element={<Registro />} path="/signup" />
                         <Route element={<Iniciar />} path="/login" />
                         <Route element={<Private />} path="/private" />
                         <Route element={<h1>Not found!</h1>} path="*" />
