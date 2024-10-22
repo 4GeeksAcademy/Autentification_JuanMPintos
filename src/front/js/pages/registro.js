@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 
 export const Registro = () => {
-	const { store, actions } = useContext(Context);
 
 	return (
 		<>

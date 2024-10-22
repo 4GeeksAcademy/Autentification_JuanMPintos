@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
 
 export const Signup = () => {
     const { store, actions } = useContext(Context);
@@ -10,8 +12,12 @@ export const Signup = () => {
         repeatPassword: ""
     });
 
+
     const [errorMessage, setErrorMessage] = useState("");  
     const [successMessage, setSuccessMessage] = useState("");
+    const navigate = useNavigate();
+
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,6 +44,10 @@ export const Signup = () => {
             }).then(() => {
                 sessionStorage.setItem("signup_email", formData.email);
                 sessionStorage.setItem("signup_password", formData.password);
+
+                navigate("/login");
+
+
                 // Cerrar el modal de signup y abrir el de login
                 const signupModal = document.getElementById("signupModal");
                 const signupModalInstance = bootstrap.Modal.getInstance(signupModal);

@@ -14,8 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
+                            email: formData.email,
                             password: formData.password,
-                            telefono: formData.phone,
                         }),
                     });
 
@@ -46,16 +46,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                             password: password,
                         })
                     });
-
+            
                     const data = await response.json();
-                    console.log(data.user_id)
-
+            
                     if (response.ok) {
-                        sessionStorage.setItem('token', data.access_token);
-                        sessionStorage.setItem('user_name', data.user_name);
-                        sessionStorage.setItem('user_id', '1')
-                        localStorage.setItem('usuario', data.user_id)
-                        return { success: true, data: data };
+                        if (data.access_token && data.user_id) { 
+                            sessionStorage.setItem('token', data.access_token);
+                            sessionStorage.setItem('user_id', data.user_id); 
+                            localStorage.setItem('user', data.user_id); 
+                            
+                            return { success: true, data: data };
+                        } else {
+                            return { success: false, error: 'Datos incompletos en la respuesta del servidor' };
+                        }
                     } else if (response.status === 404) {
                         return { success: false, error: 'Usuario no registrado' };
                     } else if (response.status === 401) {
