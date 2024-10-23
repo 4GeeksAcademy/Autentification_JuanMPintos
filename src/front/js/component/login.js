@@ -41,10 +41,6 @@ export const Login = () => {
         if (result.success) {
             navigate('/private');  
 
-            
-
-            //const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-            //if (loginModal) loginModal.hide();  
 
         } else if (result.error === 'Usuario no registrado') {
             Swal.fire({

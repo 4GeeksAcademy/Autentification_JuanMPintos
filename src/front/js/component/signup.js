@@ -48,7 +48,6 @@ export const Signup = () => {
                 navigate("/login");
 
 
-                // Cerrar el modal de signup y abrir el de login
                 const signupModal = document.getElementById("signupModal");
                 const signupModalInstance = bootstrap.Modal.getInstance(signupModal);
                 signupModalInstance.hide();
