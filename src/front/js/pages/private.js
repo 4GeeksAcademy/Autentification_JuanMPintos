@@ -1,17 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
-
+import { Context } from "../store/appContext";
 
 export const Private = () => {
 	const navigate = useNavigate();
-
+    const { store, actions } = useContext(Context);
+	
 	useEffect(() => {
-        const token = sessionStorage.getItem('token');
-
-        if (!token) {
-            navigate('/login');
-        }
-    }, [navigate]);
+		const validateAccess = async () => {
+			const isValid = await actions.getPrivate();
+			if (!isValid){
+				alert('No estas logueado');
+				navigate('/');
+			} 
+		};
+		validateAccess();
+	}, []);
 
 
 	const handleLogout = () => {
@@ -27,8 +31,12 @@ export const Private = () => {
 				type="submit"
 				className="btn btn-primary"
 				onClick={handleLogout}>
-			Cerrar sesion
+				Cerrar sesion
 			</button>
 		</>
 	);
 };
+
+
+
+

@@ -56,48 +56,7 @@ def login():
         'user_id': user.id
     }), 200
 
-# USAMOS REFRESH TOKEN PARA GENERAR UNO NUEVO AUTOMATICAMENTE
 
-@api.route('/refresh', methods=['POST'])
-@jwt_required(refresh=True)
-def refresh():
-    current_user_id = get_jwt_identity()
-    new_access_token = create_access_token(identity=current_user_id)
-    return jsonify({
-        'access_token': new_access_token
-    }), 200
-
-
-
-# RUTA PROTEGIDA CON TOKEN
-
-@api.route('/protected', methods=['GET'])
-@jwt_required()
-def protected():
-    current_user_id = get_jwt_identity()  
-    user = User.query.get(current_user_id)
-
-    if user is None:
-        return jsonify({'msg': 'Usuario no encontrado'}), 404
-
-    return jsonify({
-        'id': user.id,
-        'email': user.email,
-    }), 200
-
-
-# VALIDAR EL TOKEN
-
-@api.route('/validate-token', methods=['GET'])
-@jwt_required()
-def validate_token():
-    current_user_id = get_jwt_identity()  
-    user = User.query.get(current_user_id)
-
-    if user is None:
-        return jsonify({'msg': 'Usuario no encontrado'}), 404
-
-    return jsonify({'msg': 'Token válido', 'user_id': user.id, 'email': user.email}), 200
 
 # ENDPOINT PRIVATE
 @api.route("/private", methods=["GET"])

@@ -70,6 +70,32 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, error: 'Error de conexión' };
                 }
             },
+
+            getPrivate: async () => {
+                const token = sessionStorage.getItem("token");
+            
+                try {
+                    const response = await fetch("https://crispy-enigma-x5rg4pqqqwxj2pgw6-3001.app.github.dev/api/private", {
+                        method: 'GET',
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        }
+                    });
+            
+                    if (!response.ok) {
+                        console.error("Error al obtener datos privados:", response.statusText);
+                        return false;
+                    }
+            
+                    const data = await response.json();
+                    console.log(data);
+                    return data;
+                } catch (error) {
+                    console.error("Error de conexión:", error);
+                    return false;
+                }
+            }
 		}
 	};
 };
